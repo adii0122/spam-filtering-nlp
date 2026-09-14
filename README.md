@@ -120,4 +120,4 @@ nltk.download('punkt')
 
 ## 👤 Author
 
-- **Ansh Verma (adii0122)** - [GitHub Profile](https://github.com/adii0122)
+- **Ansh verma (adii0122)** - [GitHub Profile](https://github.com/adii0122)

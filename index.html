@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpamShield AI — SMS & Message Spam Filtering through NLP</title>
+  <meta name="description" content="Interactive Natural Language Processing (NLP) web application for real-time SMS spam detection using TF-IDF feature extraction, Snowball Stemmer, and Machine Learning classifiers.">
+  <meta name="author" content="Ansh Verma">
+  <meta name="keywords" content="NLP, Spam Filter, Machine Learning, Python, TF-IDF, Naive Bayes, SVM, Scikit-learn">
+
+  <!-- OpenGraph Meta Tags -->
+  <meta property="og:title" content="SpamShield AI — SMS & Message Spam Detection">
+  <meta property="og:description" content="Real-time Natural Language Processing and Machine Learning SMS Spam Classifier.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#" class="brand">
+        <div class="brand-icon">⚡</div>
+        <span class="brand-title">SpamShield <span class="brand-badge">NLP AI</span></span>
+      </a>
+
+      <div class="nav-actions">
+        <a href="#models" class="nav-link">Models</a>
+        <a href="#pipeline" class="nav-link">Pipeline</a>
+        <a href="#dataset" class="nav-link">Dataset</a>
+        <a href="https://github.com/adii0122/spam-filtering-nlp" target="_blank" rel="noopener noreferrer" class="btn-github">
+          <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-pill">
+        <span class="pulse-dot"></span>
+        Interactive NLP Classifier & Real-Time Analyzer
+      </div>
+      <h1 class="hero-title">
+        Detect SMS Spam with <br>
+        <span class="text-gradient">Natural Language Processing</span>
+      </h1>
+      <p class="hero-desc">
+        Instant real-time message classification powered by TF-IDF feature extraction, Snowball Stemming, and probabilistic machine learning models trained on 5,500+ text communications.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Scanner Section -->
+  <main class="container">
+    
+    <!-- Presets Selector -->
+    <section class="presets-section">
+      <span class="presets-label">⚡ Test with Pre-Loaded Presets:</span>
+      <div class="presets-grid">
+        <button class="preset-btn spam-preset" data-preset="lottery">
+          <span>🎰</span> Urgent £2,000 Lottery (Spam)
+        </button>
+        <button class="preset-btn spam-preset" data-preset="phishing">
+          <span>🏦</span> Account Alert Phishing (Spam)
+        </button>
+        <button class="preset-btn spam-preset" data-preset="voucher">
+          <span>🎁</span> Holiday Voucher Scam (Spam)
+        </button>
+        <button class="preset-btn ham-preset" data-preset="casual">
+          <span>💬</span> Dinner Plans with Friends (Ham)
+        </button>
+        <button class="preset-btn ham-preset" data-preset="work">
+          <span>💼</span> Updated Project Sync (Ham)
+        </button>
+        <button class="preset-btn ham-preset" data-preset="dataset">
+          <span>🎵</span> CallerTune Confirmation (Ham)
+        </button>
+      </div>
+    </section>
+
+    <!-- Scanner Grid -->
+    <div class="scanner-grid">
+      
+      <!-- Input Panel -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <span>📝</span> Message Input & Analysis
+          </h2>
+          <button id="copy-btn" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;">
+            Copy Text
+          </button>
+        </div>
+
+        <div class="textarea-wrapper" id="textarea-container">
+          <div id="scanner-laser" class="scanner-laser"></div>
+          <textarea 
+            id="message-input" 
+            placeholder="Type or paste any SMS, email snippet, or message text here to test spam classification..."
+            spellcheck="false"
+          ></textarea>
+        </div>
+
+        <div class="input-actions">
+          <div class="btn-group">
+            <button id="analyze-btn" class="btn btn-primary">
+              <span>🔍</span> Scan Message
+            </button>
+            <button id="clear-btn" class="btn btn-secondary">
+              Clear
+            </button>
+          </div>
+          <span style="font-size: 0.8rem; color: var(--text-subtle);">Live NLP inference enabled</span>
+        </div>
+
+        <!-- Heuristics Metrics Bar -->
+        <div class="heuristics-row">
+          <div class="stat-box">
+            <span class="stat-label">Characters</span>
+            <span id="char-count" class="stat-value">0</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Words</span>
+            <span id="word-count" class="stat-value">0</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Caps Ratio</span>
+            <span id="upper-ratio" class="stat-value">0%</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Digits Ratio</span>
+            <span id="digit-ratio" class="stat-value">0%</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Punctuation</span>
+            <span id="punct-count" class="stat-value">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result & Verdict Panel -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <span>🛡️</span> Classification Verdict
+          </h2>
+          <span id="risk-badge" class="pill-tag spam">HIGH RISK</span>
+        </div>
+
+        <div id="verdict-badge" class="status-badge spam">
+          <div id="verdict-icon" class="status-icon">🚨</div>
+          <div id="verdict-title" class="status-title">SPAM DETECTED</div>
+          <div id="verdict-subtitle" class="status-subtitle">
+            High probability of unsolicited commercial or phishing message.
+          </div>
+        </div>
+
+        <!-- Animated Confidence Gauge -->
+        <div class="gauge-wrapper">
+          <svg class="gauge-svg" width="130" height="130" viewBox="0 0 100 100">
+            <circle class="gauge-bg" cx="50" cy="50" r="45" stroke-width="8" fill="transparent" />
+            <circle id="gauge-progress" class="gauge-progress" cx="50" cy="50" r="45" stroke-width="8" fill="transparent" />
+          </svg>
+          <div class="gauge-content">
+            <div id="confidence-value" class="gauge-percent">98.5%</div>
+            <div class="gauge-caption">Confidence</div>
+          </div>
+        </div>
+
+        <!-- Keyword & Signal Inspector -->
+        <div class="keywords-box">
+          <div class="keywords-title">
+            <span>🔎 Informative Keyword Signals</span>
+            <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: normal;">TF-IDF Weight</span>
+          </div>
+          <div id="keywords-list" class="keywords-list">
+            <!-- Populated dynamically by app.js -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- NLP Pipeline Visualizer Section -->
+    <section id="pipeline" class="section">
+      <div class="section-header">
+        <h2 class="section-title">End-to-End NLP Pipeline</h2>
+        <p class="section-subtitle">How text transforms from raw characters into numerical vectors and machine learning predictions.</p>
+      </div>
+
+      <div class="pipeline-flow">
+        <div class="pipe-step">
+          <div class="pipe-step-num">Step 01</div>
+          <div class="pipe-step-title">Text Cleaning</div>
+          <div class="pipe-step-desc">Strips punctuation, handles encoding, and casts to lowercase.</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-step-num">Step 02</div>
+          <div class="pipe-step-title">Tokenization</div>
+          <div class="pipe-step-desc">Segments character strings into individual semantic tokens.</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-step-num">Step 03</div>
+          <div class="pipe-step-title">Stopwords Filter</div>
+          <div class="pipe-step-desc">Removes non-informative English functional words (NLTK corpus).</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-step-num">Step 04</div>
+          <div class="pipe-step-title">Snowball Stemmer</div>
+          <div class="pipe-step-desc">Reduces inflectional variants to base root words.</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-step-num">Step 05</div>
+          <div class="pipe-step-title">TF-IDF & Model</div>
+          <div class="pipe-step-desc">Computes term frequency-inverse document frequency matrices.</div>
+        </div>
+      </div>
+
+      <!-- Real-time Pipeline Transformation Inspector -->
+      <div class="pipe-preview-box">
+        <div class="pipe-preview-col">
+          <div class="pipe-preview-label">1. Tokenized Stream</div>
+          <div id="pipe-tokens" class="pipe-preview-text">urgent, you, have, won, a, 2000, cash...</div>
+        </div>
+        <div class="pipe-preview-col">
+          <div class="pipe-preview-label">2. Stopwords Filtered</div>
+          <div id="pipe-filtered" class="pipe-preview-text">urgent, won, 2000, cash, prize, guaranteed...</div>
+        </div>
+        <div class="pipe-preview-col">
+          <div class="pipe-preview-label">3. Stemmed Roots</div>
+          <div id="pipe-stemmed" class="pipe-preview-text">urgent, won, 2000, cash, prize, guarante...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Model Comparison & Benchmarks -->
+    <section id="models" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Model Performance & Evaluation</h2>
+        <p class="section-subtitle">Benchmarked on 1,672 test messages with a 70/30 stratified train-test split.</p>
+      </div>
+
+      <div class="models-grid">
+        
+        <!-- Support Vector Machine -->
+        <div class="model-card featured">
+          <span class="badge-featured">Top Precision</span>
+          <h3 class="model-name">Support Vector Machine</h3>
+          <div class="model-type">SVC(kernel='sigmoid', gamma=1.0)</div>
+          
+          <div class="model-metric-row">
+            <span class="metric-name">Accuracy</span>
+            <span class="metric-val highlight">97.49%</span>
+          </div>
+          <div class="model-metric-row">
+            <span class="metric-name">Precision (Ham)</span>
+            <span class="metric-val highlight">99.93%</span>
+          </div>
+          <div class="model-metric-row">
+            <span class="metric-name">False Positive Rate</span>
+            <span class="metric-val highlight">0.07% (1 of 1440)</span>
+          </div>
+          <div class="model-metric-row">
+            <span class="metric-name">F1-Score</span>
+            <span class="metric-val">97.39%</span>
+          </div>
+        </div>
+
+        <!-- Multinomial Naive Bayes -->
+        <div class="model-card">
+          <h3 class="model-name">Multinomial Naive Bayes</h3>
+          <div class="model-type">MultinomialNB(alpha=0.2)</div>
+          
+          <div class="model-metric-row">
+            <span class="metric-name">Accuracy</span>
+            <span class="metric-val highlight">99.19%</span>
+          </div>
+          <div class="model-metric-row">
+            <span class="metric-name">Informative Features</span>
+            <span class="metric-val">Top 20 Extracted</span>
+          </div>
+          <div class="model-metric-row">
+            <span class="metric-name">Inference Latency</span>
+            <span class="metric-val highlight">&lt; 1 ms</span>
+          </div>
+          <div class="model-metric-row">
+            <span class="metric-name">F1-Score</span>
+            <span class="metric-val">98.85%</span>
+          </div>
+        </div>
+
+        <!-- Decision Tree -->
+        <div class="model-card">
+          <h3 class="model-name">Decision Tree Classifier</h3>
+          <div class="model-type">DecisionTreeClassifier()</div>
+          
+          <div class="model-metric-row">
+            <span class="metric-name">Accuracy</span>
+            <span class="metric-val">96.41%</span>
+          </div>
+          <div class="model-metric-row">
+            <span class="metric-name">Precision</span>
+            <span class="metric-val">96.37%</span>
+          </div>
+          <div class="model-metric-row">
+            <span class="metric-name">Recall</span>
+            <span class="metric-val">96.41%</span>
+          </div>
+          <div class="model-metric-row">
+            <span class="metric-name">F1-Score</span>
+            <span class="metric-val">96.38%</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Confusion Matrix & Breakdown -->
+      <div class="benchmark-split">
+        <div class="glass-panel">
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 6px;">
+            📊 Confusion Matrix (SVC Evaluation)
+          </h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+            Crucial metric: Only <strong>1 false positive</strong> out of 1,440 legitimate messages, ensuring critical personal communications are never mistakenly discarded.
+          </p>
+
+          <table class="matrix-table">
+            <tr>
+              <td class="matrix-cell tn">
+                <div class="matrix-count">1,439</div>
+                <div class="matrix-desc">True Negatives (Legitimate)</div>
+              </td>
+              <td class="matrix-cell fp">
+                <div class="matrix-count">1</div>
+                <div class="matrix-desc">False Positives (Mistaken)</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="matrix-cell fn">
+                <div class="matrix-count">41</div>
+                <div class="matrix-desc">False Negatives (Missed)</div>
+              </td>
+              <td class="matrix-cell tp">
+                <div class="matrix-count">191</div>
+                <div class="matrix-desc">True Positives (Caught Spam)</div>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="glass-panel" id="dataset">
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 6px;">
+            📦 SMS Spam Collection Dataset
+          </h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+            Sourced from UCI Machine Learning Repository and NUS SMS Corpus, comprising 5,574 labeled messages.
+          </p>
+
+          <div style="display: flex; gap: 14px; margin-bottom: 20px;">
+            <div style="flex: 1; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-sm); padding: 12px; text-align: center;">
+              <div style="font-family: var(--font-mono); font-size: 1.5rem; font-weight: 800; color: #34d399;">4,825</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Ham (86.6%)</div>
+            </div>
+            <div style="flex: 1; background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3); border-radius: var(--radius-sm); padding: 12px; text-align: center;">
+              <div style="font-family: var(--font-mono); font-size: 1.5rem; font-weight: 800; color: #f43f5e;">747</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Spam (13.4%)</div>
+            </div>
+          </div>
+
+          <p style="font-size: 0.825rem; color: var(--text-subtle); line-height: 1.5;">
+            Features engineered include message length distribution, TF-IDF unigram & bigram vocabulary representations, uppercase character frequencies, and currency trigger analysis.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">
+        Created by <a href="https://github.com/adii0122" target="_blank" rel="noopener noreferrer" class="footer-link">Ansh Verma (adii0122)</a> 
+        • Natural Language Processing & Machine Learning Portfolio
+      </p>
+      <p class="footer-sub">
+        Built with Vanilla HTML5, CSS3 & JavaScript • Powered by NLTK & Scikit-learn TF-IDF Vectorization Architecture
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
