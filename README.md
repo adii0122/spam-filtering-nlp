@@ -1,5 +1,10 @@
 # 📩 SMS & Message Spam Filtering using NLP and Machine Learning
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-success?style=for-the-badge&logo=github)](https://adii0122.github.io/spam-filtering-nlp/)
+[![Repository](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/adii0122/spam-filtering-nlp)
+
+> 🚀 **Live Interactive Web Application**: Try the live spam filter directly in your browser: **[https://adii0122.github.io/spam-filtering-nlp/](https://adii0122.github.io/spam-filtering-nlp/)**
+
 An end-to-end Natural Language Processing (NLP) and Machine Learning project for classifying SMS messages and text communications as **Spam** or **Ham** (legitimate). 
 
 This project explores text preprocessing techniques, TF-IDF feature extraction, and comparative evaluation across multiple machine learning algorithms including **Support Vector Machines (SVM)**, **Multinomial Naive Bayes (MNB)**, and **Decision Trees**.
